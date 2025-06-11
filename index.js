@@ -1,57 +1,36 @@
-const inputItem = document.getElementById("input-item")
+import { criarItemDaLista } from "./scripts/criarItemDaLista.js";
+
+/*linkando a parte do html que queremos mexer*/
 const listaDeCompras = document.getElementById("lista-de-compras")
+
+/*pegando o botão adicionar pra podermos fazer uma ação a partir dele*/
 const botaoAdicionar = document.getElementById("adicionar-item")
-let contator = 0;
 
+
+/*adiciona um fofoqueiro, no caso, ele tá de olho quando há um clique no botão*/
+/*isso tudo aqui é pra adicionar um item quando clicar no botao*/
 botaoAdicionar.addEventListener("click", (evento) => {
+    /*isso previne experiencias ruins com o coiso tornando pro default, mt utilizado em forms pra ele não ser resetado quando clicado no botão enviar*/
     evento.preventDefault();
-    
-    if(inputItem.value === "") {
-        alert("Por favor, insira um item!");
-        return
-    }
 
-    const itemDaLista = document.createElement("li");
+    const itemDaLista = criarItemDaLista();
 
-    const containerItemDaLista = document.createElement("div");
-    containerItemDaLista.classList.add("lista-item-container");
-
-    const inputCheckbox = document.createElement("input");
-    inputCheckbox.type = "checkbox";
-    inputCheckbox.id = "checkbox-" + contator++;
-
-    const nomeItem = document.createElement("p");
-    nomeItem.innerText = inputItem.value;
-
-    inputCheckbox.addEventListener("click", function(){
-        if(inputCheckbox.checked) {
-            nomeItem.style.textDecoration = "line-through";
-        } else {
-            nomeItem.style.textDecoration = "none";
-        }
-    })
-
-    containerItemDaLista.appendChild(inputCheckbox);
-    containerItemDaLista.appendChild(nomeItem);
-
-    itemDaLista.appendChild(containerItemDaLista);
-
-    const diaDaSemana = new Date().toLocaleDateString("pt-BR", {
-        weekday: "long" 
-    });
-    const data = new Date().toLocaleDateString("pt-BR")
-    const hora = new Date().toLocaleTimeString("pt-BR", {
-        hour: "numeric",
-        minute: "numeric"
-    });
-
-    const dataCompleta = `${diaDaSemana} (${data}) às ${hora}`
-    const itemData = document.createElement("p");
-    itemData.innerText = dataCompleta;
-    itemData.classList.add("texto-data");
-
-    itemDaLista.appendChild(itemData)
+    /*colocando o item da lista dentro da lista de compras*/
     listaDeCompras.appendChild(itemDaLista)
 
-    
+    verificarListaVazia();
 })
+
+const mensagemListaVazia = document.querySelector(".mensagem-lista-vazia");
+
+function verificarListaVazia() {
+    const itensDaLista = listaDeCompras.querySelectorAll("li");
+
+    if(itensDaLista.length === 0) {
+        mensagemListaVazia.style.display = "block"
+    } else {
+        mensagemListaVazia.style.display = "none"
+    }
+}
+
+verificarListaVazia();
