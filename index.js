@@ -1,8 +1,8 @@
 import { criarItemDaLista } from "./scripts/criarItemDaLista.js";
+import verificarListaVazia from "./scripts/verificarListaVazia.js";
 
 /*linkando a parte do html que queremos mexer*/
 const listaDeCompras = document.getElementById("lista-de-compras")
-
 /*pegando o botão adicionar pra podermos fazer uma ação a partir dele*/
 const botaoAdicionar = document.getElementById("adicionar-item")
 
@@ -14,23 +14,10 @@ botaoAdicionar.addEventListener("click", (evento) => {
     evento.preventDefault();
 
     const itemDaLista = criarItemDaLista();
-
     /*colocando o item da lista dentro da lista de compras*/
     listaDeCompras.appendChild(itemDaLista)
 
-    verificarListaVazia();
+    verificarListaVazia(listaDeCompras);
 })
 
-const mensagemListaVazia = document.querySelector(".mensagem-lista-vazia");
-
-function verificarListaVazia() {
-    const itensDaLista = listaDeCompras.querySelectorAll("li");
-
-    if(itensDaLista.length === 0) {
-        mensagemListaVazia.style.display = "block"
-    } else {
-        mensagemListaVazia.style.display = "none"
-    }
-}
-
-verificarListaVazia();
+verificarListaVazia(listaDeCompras);
